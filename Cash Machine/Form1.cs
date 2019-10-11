@@ -66,6 +66,7 @@ namespace Cash_Machine
             SoundPlayer cashRegister = new SoundPlayer(Properties.Resources.cashRegister);
             // background 
             //g.FillRectangle(rectangleBrush, 330, 20, 300, 300);
+            g.Clear(Color.Black);
             Thread.Sleep(350);
             g.DrawLine(BorderPen, 330, 20, 620, 20);
             Thread.Sleep(350);
