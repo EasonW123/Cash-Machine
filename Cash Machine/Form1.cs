@@ -9,17 +9,23 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
 using System.Media;
-
+/// <summary>
+/// Eason Wu
+/// October 21,2019
+/// Cash register
+/// </summary>
 namespace Cash_Machine
 {
     public partial class Form1 : Form
     {
+        // creating constan variable 
         const double SPRAY = 25.00;
         const double CURE_KIT = 30.00;
         const double WIPES = 18.00;
         const double TAX = 0.13;
         double subTotal, tax, total, tender, change;
         int numberOfCurekit, numberOfSpray, numberOfWipes;
+        double costOfSpray, costOfCurekit, costOfWipes;
 
         private void NewOrderLabel_Click(object sender, EventArgs e)
         {
@@ -33,6 +39,7 @@ namespace Cash_Machine
             totalLabel.Text = "Total: ";
             changeLabel.Text = "";
             tenderedBox.Text = Convert.ToString("");
+
             // clearing everything
             numberOfCureKitBox.Value = 0;
             numberOfSprayBox.Value = 0;
@@ -58,14 +65,13 @@ namespace Cash_Machine
             Font drawrceipt = new Font("Segoe Print", 10, FontStyle.Regular);
             Font drawTitle = new Font("Arial", 15, FontStyle.Bold);
             SolidBrush receiptBrush = new SolidBrush(Color.LimeGreen);
-            SolidBrush rectangleBrush = new SolidBrush(Color.White);
             SolidBrush TitleBrush = new SolidBrush(Color.Teal);
             Pen BorderPen = new Pen(Color.GhostWhite, 3);
 
             // sound
             SoundPlayer cashRegister = new SoundPlayer(Properties.Resources.cashRegister);
+
             // background 
-            //g.FillRectangle(rectangleBrush, 330, 20, 300, 300);
             g.Clear(Color.Black);
             Thread.Sleep(350);
             g.DrawLine(BorderPen, 330, 20, 620, 20);
@@ -75,12 +81,15 @@ namespace Cash_Machine
             g.DrawLine(BorderPen, 330, 320, 620, 320);
             Thread.Sleep(350);
             g.DrawLine(BorderPen, 620, 320, 620, 20);
+
             //title
             g.DrawString("Crep Protect", drawTitle, TitleBrush, 420, 30);
+
             //made a random order generator
             Random Order = new Random();
             int ordernumber = Order.Next(1, 500);
-            //receipt 
+
+            //making the receipt 
             cashRegister.Play();
             g.DrawString("Tuesday October 8, 2019", drawrceipt, receiptBrush, 400, 60);
             g.DrawString("Order Number:  " + ordernumber, drawrceipt, receiptBrush, 400, 75);
@@ -123,10 +132,10 @@ namespace Cash_Machine
 
         }
 
-        double costOfSpray, costOfCurekit, costOfWipes;
 
         private void CalculateChangeButton_Click(object sender, EventArgs e)
         {
+            // converting numbers from input
             try
             {
                 numberOfCurekit = Convert.ToInt16(numberOfCureKitBox.Text);
@@ -138,6 +147,7 @@ namespace Cash_Machine
                 totalLabel.Text = "Please enter a numeric value";
                 return;
             }
+
             // calulation
             costOfCurekit = CURE_KIT * numberOfCurekit;
             costOfSpray = SPRAY * numberOfSpray;
@@ -160,8 +170,11 @@ namespace Cash_Machine
             {
                 totalLabel.Text = "Please enter a numeric value";
             }
+
+            //calculating change 
             change = tender - total;
 
+            // making the change into a currency 
             changeLabel.Text = change.ToString("C");
         }
 
@@ -176,17 +189,19 @@ namespace Cash_Machine
 
         private void CalculateButton_Click(object sender, EventArgs e)
         {
+            //converting number from input
             try
             {
-                numberOfCurekit = Convert.ToInt16(numberOfCureKitBox.Text);
-                numberOfSpray = Convert.ToInt16(numberOfSprayBox.Text);
-                numberOfWipes = Convert.ToInt16(numberOfWipesBox.Text);
+               numberOfCurekit = Convert.ToInt16(numberOfCureKitBox.Text);
+               numberOfSpray = Convert.ToInt16(numberOfSprayBox.Text);
+               numberOfWipes = Convert.ToInt16(numberOfWipesBox.Text);
             }
             catch
             {
                 totalLabel.Text = "Please enter a numeric value";
                 return;
             }
+
             // calulation
             costOfCurekit = CURE_KIT * numberOfCurekit;
             costOfSpray = SPRAY * numberOfSpray;
